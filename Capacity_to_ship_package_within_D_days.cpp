@@ -1,7 +1,22 @@
 //1011. Capacity To Ship Packages Within D Days
 //not executable 
 //error
-class Solution {
+
+
+//         bool ship(int mid, int days, vector<int> weights){
+//             int ships=1, curcap=mid, n=weights.size();
+//             for(int i=0; i<n;i++){
+//                 if(curcap-weights[i]<0){
+//                     ships=ships+1;
+//                     curcap=mid;
+//                 }
+//                 else
+//                 curcap=curcap-w;
+//                 return ships<=days;
+//             }
+//         }
+
+     class Solution {
 public:
     int shipWithinDays(vector<int>& weights, int days) {
         int l, r;
@@ -10,31 +25,27 @@ public:
             r += w;
         }
         int res=r, mid;
-
-        bool ship(int mid, int days, vector<int> weights){
-            int ships=1, curcap=mid, n=weights.size();
-            for(int i=0; i<n;i++){
+        while(l<=r){
+           mid=(r+l)/2;
+           int ships=1, curcap=mid, n=weights.size();
+           for(int i=0; i<n;i++){
                 if(curcap-weights[i]<0){
                     ships=ships+1;
                     curcap=mid;
                 }
                 else
-                curcap=curcap-w;
-                return ships<=days;
-            }
-        }
-
-        while(l<=r){
-           mid=(r+l)/2;
-            if(ship(mid,days,weights)){
+                curcap=curcap-weights[i];
+           }
+                bool valid=ships<=days;
+            if(valid){
                 res=min(res,mid);
                 r=mid-1;
             }
             else {
-                l=m+1;
+                l=mid+1;
             }
             return res;
         }
-        
+      return l;  
     }
 };
